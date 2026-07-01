@@ -9,225 +9,78 @@
             --cor-fundo: #0b0e11; 
             --cor-card: #161b22; 
             --cor-laranja: #ff9900; 
-            --cor-neon: #00f2fe; 
-            --cor-ouro: #ffd700; 
             --cor-sucesso: #00e676;
         }
-
-        body { 
-            background: radial-gradient(circle at top, #1a1f26, #0b0e11); 
-            color: white; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            padding-bottom: 100px; 
-            text-align: center;
-            overflow-x: hidden;
-        }
-
-        /* TELA DE ENTRADA (SPLASH SCREEN) */
-        #splash-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #0b0e11;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease;
-        }
-        .splash-logo {
-            width: 180px;
-            border-radius: 50%;
-            box-shadow: 0 0 40px rgba(255, 153, 0, 0.4);
-            animation: pulse 2s infinite;
-        }
-        .splash-titulo {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: var(--cor-ouro);
-            margin-top: 20px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        /* HEADER & SALDO */
-        .header {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .logo-img { 
-            width: 80px; 
-            border-radius: 50%; 
-            border: 2px solid var(--cor-laranja); 
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.3); 
-        }
-
-        .saldo-container {
-            font-size: 1.3rem;
-            margin: 10px 0 5px 0;
-            font-weight: bold;
-            color: var(--cor-sucesso);
-        }
-
-        .bonus-aviso {
-            font-size: 0.85rem;
-            color: var(--cor-ouro);
-            background: rgba(255, 215, 0, 0.1);
-            padding: 5px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        /* GERENCIADOR DE TELAS */
-        .tela {
-            display: none;
-            padding: 20px;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .tela.ativa {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse { 
-            0% { transform: scale(1); } 
-            50% { transform: scale(1.05); } 
-            100% { transform: scale(1); } 
-        }
-
-        /* ROLETA */
-        .roleta { 
-            width: 200px; height: 200px; 
-            border: 8px double var(--cor-ouro); 
-            border-radius: 50%; margin: 30px auto; 
-            display: flex; justify-content: center; align-items: center; 
-            background: conic-gradient(from 0deg, #333, #000, #333); 
-            color: var(--cor-ouro); text-shadow: 0 0 10px var(--cor-ouro); 
-            font-size: 1.3rem; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); 
-            transition: transform 1.5s ease-out;
-        }
-        
-        /* CASSINO SLOTS */
-        .slots-container { display: flex; justify-content: center; gap: 15px; margin: 30px auto; }
-        .slot-box { 
-            width: 70px; height: 90px; background: #21262d; 
-            border: 3px solid var(--cor-neon); border-radius: 10px; 
-            font-size: 3rem; line-height: 90px; box-shadow: 0 0 15px rgba(0, 242, 254, 0.2); 
-        }
-
-        /* CARTAS */
-        .carta-box { 
-            width: 110px; height: 160px; background: white; color: black; 
-            border-radius: 10px; margin: 20px auto; font-size: 4rem; 
-            line-height: 160px; font-weight: bold; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
-        }
-        .btn-escolha { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .btn-maior { background: #00e676; color: black; }
-        .btn-menor { background: #ff1744; color: white; }
-
-        /* TELA DE SAQUE */
-        .caixa-saque {
-            background: var(--cor-card);
-            border: 1px solid #30363d;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .aviso-bloqueio {
-            background: rgba(255, 23, 68, 0.1);
-            border: 1px solid #ff1744;
-            color: #ff5252;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 0.95rem;
-        }
-
-        /* BOTÕES */
-        .btn-aposta { 
-            padding: 15px 35px; background: linear-gradient(45deg, var(--cor-laranja), #ff5e00); 
-            border: none; border-radius: 50px; color: white; font-weight: bold; 
-            font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4); margin-top: 15px;
-        }
-        .btn-verde { background: linear-gradient(45deg, #00e676, #00b0ff); color: black; }
-
-        /* MENU INFERIOR */
-        .nav-fixa { 
-            position: fixed; bottom: 0; left: 0; width: 100%; background: #000; 
-            display: flex; justify-content: space-around; padding: 15px 0; 
-            border-top: 2px solid #30363d; z-index: 100; 
-        }
-        .nav-item { text-align: center; font-size: 0.85rem; cursor: pointer; color: #8b949e; }
+        body { background: #0b0e11; color: white; font-family: sans-serif; margin: 0; padding-bottom: 100px; text-align: center; }
+        .tela { display: none; padding: 20px; }
+        .tela.ativa { display: block; }
+        .header { padding: 20px; background: rgba(0,0,0,0.3); border-bottom: 1px solid #30363d; }
+        .logo-img { width: 80px; border-radius: 50%; border: 2px solid var(--cor-laranja); }
+        .btn-aposta { padding: 15px 30px; background: var(--cor-laranja); border: none; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .input-padrao { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #21262d; color: white; }
+        .nav-fixa { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #30363d; }
+        .nav-item { color: #8b949e; cursor: pointer; font-size: 0.8rem; }
         .nav-item.active { color: var(--cor-laranja); }
     </style>
 </head>
 <body>
 
+<!-- TELA LOGIN -->
+<div id="tela-login" class="tela ativa">
+    <h2>Bem-vindo à Fênix</h2>
+    <input type="text" id="nomeUser" class="input-padrao" placeholder="Seu Nome">
+    <input type="text" id="pixUser" class="input-padrao" placeholder="Sua Chave PIX">
+    <button class="btn-aposta" onclick="realizarLogin()">Entrar / Registrar</button>
+</div>
+
+<!-- HEADER (Aparece após login) -->
+<div id="main-ui" style="display: none;">
+    <div class="header">
+        <img src="https://via.placeholder.com/80" id="header-img" class="logo-img">
+        <div id="bonus-status" style="margin-top:10px; color: var(--cor-laranja);">🎁 Status: Aguardando Depósito</div>
+    </div>
+
+    <div id="tela-jogos" class="tela ativa">
+        <h2>Selecione um jogo</h2>
+        <button class="btn-aposta" onclick="alert('Deposite para liberar os jogos!')">Jogar Roleta</button>
+    </div>
+
+    <div id="tela-indicacao" class="tela">
+        <h2>Convide Amigos</h2>
+        <p>Indique e ganhe bônus por cada amigo que depositar!</p>
+        <div id="link-indicacao" style="background: #21262d; padding: 15px; border-radius: 10px; margin: 10px;">
+            https://fenixgames.com/ref/<span id="id-usuario">...</span>
+        </div>
+        <button class="btn-aposta" onclick="copiarLink()">Copiar Link</button>
+    </div>
+
+    <nav class="nav-fixa">
+        <div class="nav-item active" onclick="mudarTela('jogos')">🎮<br>Jogos</div>
+        <div class="nav-item" onclick="mudarTela('indicacao')">👥<br>Indicar</div>
+    </nav>
+</div>
+
 <script>
-    const LOGO_FENIX = "data:image/png;base64,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";
-    
-    window.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('splash-img').src = LOGO_FENIX;
-        document.getElementById('header-img').src = LOGO_FENIX;
-        
-        setTimeout(() => {
-            const splash = document.getElementById('splash-screen');
-            splash.style.opacity = '0';
-            setTimeout(() => splash.style.display = 'none', 500);
-        }, 3000);
-    });
+    function realizarLogin() {
+        const nome = document.getElementById('nomeUser').value;
+        if(nome) {
+            document.getElementById('tela-login').style.display = 'none';
+            document.getElementById('main-ui').style.display = 'block';
+            document.getElementById('id-usuario').innerText = nome.toLowerCase().replace(/\s/g, '');
+        } else {
+            alert("Preencha seu nome!");
+        }
+    }
+
+    function mudarTela(id) {
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+        document.getElementById('tela-' + id).classList.add('ativa');
+    }
+
+    function copiarLink() {
+        alert("Link copiado! Compartilhe com seus amigos para ganhar bônus.");
+    }
 </script>
 
-<div id="splash-screen">
-    <img id="splash-img" class="splash-logo" alt="Logo Fênix">
-    <div class="splash-titulo">FÊNIX GAMES</div>
-    <p style="color: #8b949e; margin-top: 10px;">Carregando plataforma...</p>
-</div>
-
-<div class="header">
-    <img id="header-img" class="logo-img" alt="Fênix Games">
-    <div class="saldo-container">Saldo: R$ <span id="saldo">70.00</span></div>
-    <div class="bonus-aviso" id="bonusAviso">🎁 R$ 20,00 de bônus de entrada ativado!</div>
-</div>
-
-<div id="tela-roleta" class="tela ativa">
-    <h2>Roleta de Bônus</h2>
-    <p style="color: #8b949e;">Ganhe até R$ 15,00 nesta roleta da sorte.</p>
-    <div class="roleta" id="roleta">GIRAR</div>
-    <button class="btn-aposta" id="btnRoleta" onclick="jogarRoleta()">Girar por R$ 2,00</button>
-</div>
-
-<div id="tela-slots" class="tela">
-    <h2>Fênix Slots</h2>
-    <p style="color: #8b949e;">Combine 3 símbolos iguais para ganhar R$ 25,00!</p>
-    
-    <div class="slots-container">
-        <div class="slot-box" id="slot1">🎰</div>
-        <div class="slot-box" id="slot2">🎰</div>
-        <div class="slot-box" id="slot3">🎰</div>
-    </div>
-    
-    <button class="btn-aposta" id="btnSlots" onclick="jogarSlots()">Puxar Alavanca (R$ 3,00)</button>
-</div>
-
-<div id="tela-cartas" class="tela">
-    <h2>Maior ou Menor</h2>
-    <p style="color: #8b949e;">A próxima carta será Maior ou Menor que a atual?</p>
-    
-    <div class="carta-box" id="cartaVisual">7</div>
-    <p id="feedbackCartas" style="color: var(--cor-ouro); font-weight: bold; min-height: 20px;"></p>
-    
-    <div style="margin-top: 15px;">
-        <button class="btn-escolha btn-maior" id="btnMaior"
+</body>
+</html>
