@@ -5,80 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fênix Games - Oficial</title>
     <style>
-        :root { --cor-laranja: #ff9900; --cor-neon: #00f2fe; --cor-ouro: #ffd700; --bg-card: #161b22; --texto: #ffffff; }
-        body { background: #0b0e11; color: var(--texto); font-family: sans-serif; margin: 0; }
+        :root { --cor-fundo: #0b0e11; --cor-card: #161b22; --cor-laranja: #ff9900; --cor-neon: #00f2fe; --cor-ouro: #ffd700; }
+        body { background: radial-gradient(circle at top, #1a1f26, #0b0e11); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 100px; }
         
-        /* TELA DE LOGIN/CADASTRO */
-        #auth-screen { position: fixed; top:0; left:0; width:100%; height:100%; background:#0b0e11; z-index:9999; display:flex; justify-content:center; align-items:center; }
-        .auth-box { background: var(--bg-card); width: 90%; max-width: 350px; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #30363d; }
-        .input-auth { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #30363d; border-radius: 8px; color: #fff; box-sizing: border-box; }
-        .btn-main { width: 100%; padding: 12px; background: var(--cor-neon); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000; margin-top: 10px; }
+        /* LOGO E ANIMAÇÃO */
+        .logo-img { width: 200px; border-radius: 50%; border: 3px solid var(--cor-laranja); box-shadow: 0 0 30px rgba(255, 153, 0, 0.5); animation: pulse 2s infinite; margin-top: 50px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* EFEITO DE GANHO */
-        #efeito-ganho { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 1000; pointer-events: none; background: rgba(0,0,0,0.6); }
-        .ganhou-texto { font-size: 3rem; color: var(--cor-neon); text-shadow: 0 0 20px var(--cor-neon); animation: zoom 0.5s; font-weight: bold; }
-        @keyframes zoom { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+        /* ROLETA ESTILIZADA */
+        .roleta { width: 220px; height: 220px; border: 8px double var(--cor-ouro); border-radius: 50%; margin: 30px auto; display: flex; justify-content: center; align-items: center; background: conic-gradient(from 0deg, #333, #000, #333); color: var(--cor-ouro); text-shadow: 0 0 10px var(--cor-ouro); font-size: 1.5rem; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+        
+        /* BOTÃO APOSTA */
+        .btn-aposta { padding: 18px 40px; background: linear-gradient(45deg, var(--cor-laranja), #ff5e00); border: none; border-radius: 50px; color: white; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4); }
 
-        /* PLATAFORMA */
-        header { padding: 20px; background: #000; display: flex; justify-content: space-between; align-items: center; }
-        .saldo-topo { color: var(--cor-ouro); font-weight: bold; }
-        .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .game-card { background: var(--bg-card); padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #30363d; }
-        .btn-jogar { width: 100%; padding: 8px; background: var(--cor-laranja); border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; }
-        .termos { font-size: 0.7rem; color: #8b949e; padding: 20px; line-height: 1.4; border-top: 1px solid #30363d; margin-top: 20px; text-align: center; }
+        /* MENU INFERIOR FIXO */
+        .nav-fixa { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 15px 0; border-top: 2px solid #30363d; z-index: 100; }
     </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
-<div id="auth-screen">
-    <div class="auth-box">
-        <h2 style="color:var(--cor-laranja)">Fênix Games</h2>
-        <input type="text" class="input-auth" placeholder="CPF ou E-mail">
-        <input type="password" class="input-auth" placeholder="Senha">
-        <button class="btn-main" onclick="document.getElementById('auth-screen').style.display='none'">ENTRAR</button>
-        <p style="font-size:0.8rem; margin-top:15px; cursor:pointer" onclick="alert('Instruções enviadas para seu e-mail!')">Esqueceu sua senha?</p>
-    </div>
+<!-- LOGO -->
+<img src="1000695330.png" class="logo-img" alt="Fênix Games">
+
+<!-- CONTEÚDO -->
+<div style="padding: 20px;">
+    <h1>Roleta de Bônus</h1>
+    <div class="roleta" id="roleta">GIRAR</div>
+    <button class="btn-aposta" onclick="girarRoleta()">Girar por R$ 2,00</button>
+    <p>Saldo: R$ <span id="saldo">50.00</span></p>
 </div>
 
-<!-- EFEITO DE GANHO -->
-<div id="efeito-ganho"><div class="ganhou-texto">GANHOU!</div></div>
-
-<!-- CONTEÚDO PRINCIPAL -->
-<header>
-    <div style="color:var(--cor-laranja); font-weight:bold;">FÊNIX GAMES</div>
-    <div class="saldo-topo">Saldo: R$ <span id="saldo-atual">5.00</span></div>
-</header>
-
-<div class="games-grid">
-    <div class="game-card">
-        <p>Aviator</p>
-        <button class="btn-jogar" onclick="apostar()">Jogar</button>
-    </div>
-    <div class="game-card">
-        <p>Rabbit</p>
-        <button class="btn-jogar" onclick="apostar()">Jogar</button>
-    </div>
-</div>
-
-<div class="termos">
-    <strong>Termos de Uso:</strong><br>
-    Ao jogar, você confirma ser maior de 18 anos. Jogue com responsabilidade. Seus dados estão protegidos.
-</div>
+<!-- MENU INFERIOR -->
+<nav class="nav-fixa">
+    <div style="text-align:center;">🎮<br><small>Menu</small></div>
+    <div style="text-align:center; color:var(--cor-laranja);">🎰<br><small>Cassino</small></div>
+    <div style="text-align:center;">⭐<br><small>Favoritos</small></div>
+</nav>
 
 <script>
-    let saldo = 5.00;
-
-    function apostar() {
-        if (saldo >= 1.00) {
-            saldo -= 1.00;
-            // Lógica fictícia de vitória
-            if(Math.random() > 0.5) {
-                saldo += 3.00;
-                document.getElementById('efeito-ganho').style.display = 'flex';
-                setTimeout(() => { document.getElementById('efeito-ganho').style.display = 'none'; }, 2000);
-            }
-            document.getElementById('saldo-atual').innerText = saldo.toFixed(2);
+    let saldo = 50.00;
+    function girarRoleta() {
+        if (saldo >= 2.00) {
+            saldo -= 2.00;
+            document.getElementById('roleta').innerText = "Girando...";
+            setTimeout(() => {
+                let premio = Math.random() > 0.7 ? 10.00 : 0;
+                saldo += premio;
+                document.getElementById('roleta').innerText = premio > 0 ? "GANHOU R$ " + premio : "Tente de novo!";
+                document.getElementById('saldo').innerText = saldo.toFixed(2);
+            }, 1500);
         } else {
             alert("Saldo insuficiente!");
         }
@@ -87,6 +62,7 @@
 
 </body>
 </html>
+
 
 
 
