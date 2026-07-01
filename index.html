@@ -5,509 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fênix Games - Oficial</title>
     <style>
-        :root {
-            --bg-principal: #0b0e11;
-            --bg-card: #161b22;
-            --cor-neon: #00f2fe;
-            --cor-ouro: #ffd700;
-            --cor-laranja: #ff9900;
-            --texto: #ffffff;
-            --texto-secundario: #8b949e;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        /* --- TELA DE CARREGAMENTO (SPLASH SCREEN) --- */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
-        }
-
-        .splash-logo {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--cor-laranja);
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            text-shadow: 0 0 20px rgba(255, 153, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
-            margin-bottom: 20px;
-            animation: pulsar 2s infinite alternate;
-        }
-
-        .splash-loader {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #21262d;
-            border-top: 5px solid var(--cor-neon);
-            border-radius: 50%;
-            animation: girar 1s linear infinite;
-        }
-
-        @keyframes pulsar {
-            0% { transform: scale(0.98); opacity: 0.8; }
-            100% { transform: scale(1.02); opacity: 1; }
-        }
-
-        @keyframes girar {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* --- LAYOUT DA PLATAFORMA --- */
-        header {
-            background-color: #000;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #21262d;
-        }
-
-        .logo {
-            color: var(--cor-laranja);
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 153, 0, 0.4);
-        }
-
-        .saldo-topo {
-            background: #1f242c;
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--cor-ouro);
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--cor-ouro);
-        }
-
-        .hero-banner {
-            width: 100%;
-            background: linear-gradient(135deg, #161b22 0%, #000 100%);
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--cor-laranja);
-        }
-
-        .hero-banner h1 {
-            color: var(--cor-laranja);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .destaque-bonus {
-            color: var(--cor-ouro);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        .main-content {
-            padding: 20px;
-            flex: 1;
-        }
-
-        .section-title {
-            color: var(--texto);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* --- GRID E CARDS ESTILO PREMIUM --- */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .game-card {
-            background-color: var(--bg-card);
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid #30363d;
-            text-align: center;
-            padding-bottom: 14px;
-            transition: transform 0.2s, border-color 0.2s;
-            position: relative;
-        }
-
-        .game-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--cor-neon);
-        }
-
-        .game-img-box {
-            height: 120px;
-            background: linear-gradient(180deg, #21262d 0%, #161b22 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid #21262d;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Fallback para jogos sem imagem cadastrada (usando texto/emoji) */
-        .game-img-fallback {
-            font-size: 3.2rem;
-        }
-
-        /* Mini selo do logo nos cards dos jogos */
-        .game-card::after {
-            content: 'FÊNIX';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(255, 153, 0, 0.7);
-            border: 1px solid var(--cor-laranja);
-            color: #fff;
-            font-size: 0.55rem;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 4px;
-            letter-spacing: 1px;
-            z-index: 10;
-        }
-
-        .game-name {
-            font-size: 0.95rem;
-            font-weight: bold;
-            margin: 12px 0 8px 0;
-            color: #fff;
-        }
-
-        .btn-jogar {
-            width: 85%;
-            padding: 10px;
-            background: linear-gradient(90deg, var(--cor-neon) 0%, #00bfff 100%);
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
-        }
-
-        /* --- JANELA DO JOGO (MODAL) --- */
-        .modal-jogo {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.95);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-container {
-            background: var(--bg-card);
-            border: 2px solid var(--cor-neon);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 400px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
-            position: relative;
-        }
-
-        .btn-fechar {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: transparent;
-            border: none; color: #fff;
-            font-size: 1.5rem; cursor: pointer;
-        }
-
-        .tela-gameplay {
-            background: #000;
-            height: 180px;
-            border-radius: 10px;
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #30363d;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .img-modal-jogo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0; left: 0;
-            opacity: 0.4; /* Deixa a imagem de fundo suave para destacar o botão */
-        }
-
-        .btn-apostar {
-            background: linear-gradient(45deg, var(--cor-laranja), var(--cor-ouro));
-            color: #000; padding: 12px 25px; border: none;
-            border-radius: 8px; font-weight: bold; cursor: pointer;
-            font-size: 1.1rem; text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(255, 153, 0, 0.5);
-            z-index: 5;
-        }
-
-        /* --- SISTEMA DE DEPÓSITO --- */
-        .caixa-deposito {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #30363d;
-        }
-
-        .input-deposito {
-            width: 70%; padding: 10px; background: #21262d;
-            border: 1px solid #30363d; color: #fff; border-radius: 6px;
-            text-align: center; margin-bottom: 10px; font-size: 1rem;
-        }
-
-        .btn-gerar-pix {
-            background: var(--cor-neon); color: #000;
-            padding: 10px 20px; border: none; border-radius: 6px;
-            font-weight: bold; cursor: pointer; text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-
-        #area-pix {
-            display: none; margin-top: 15px;
-        }
-
-        .qr-code { width: 140px; height: 140px; background: #fff; padding: 5px; margin: 10px auto; border-radius: 8px; }
+        :root { --cor-laranja: #ff9900; --cor-neon: #00f2fe; --cor-ouro: #ffd700; --bg-card: #161b22; --texto: #ffffff; }
+        body { background: #0b0e11; color: var(--texto); font-family: sans-serif; margin: 0; }
         
-        .pix-code { font-size: 0.75rem; background: #21262d; padding: 8px; border-radius: 6px; word-break: break-all; margin-bottom: 8px; border: 1px solid #30363d; }
+        /* TELA DE LOGIN/CADASTRO */
+        #auth-screen { position: fixed; top:0; left:0; width:100%; height:100%; background:#0b0e11; z-index:9999; display:flex; justify-content:center; align-items:center; }
+        .auth-box { background: var(--bg-card); width: 90%; max-width: 350px; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid #30363d; }
+        .input-auth { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #30363d; border-radius: 8px; color: #fff; box-sizing: border-box; }
+        .btn-main { width: 100%; padding: 12px; background: var(--cor-neon); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000; margin-top: 10px; }
 
-        footer {
-            background-color: #000; padding: 15px;
-            border-top: 1px solid #21262d; position: sticky; bottom: 0;
-            z-index: 100;
-            display: flex; justify-content: space-around;
-        }
-        .footer-item { display: flex; flex-direction: column; align-items: center; color: var(--texto-secundario); font-size: 0.8rem; cursor: pointer; }
-        .footer-item.active { color: var(--cor-laranja); font-weight: bold; }
+        /* EFEITO DE GANHO */
+        #efeito-ganho { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 1000; pointer-events: none; background: rgba(0,0,0,0.6); }
+        .ganhou-texto { font-size: 3rem; color: var(--cor-neon); text-shadow: 0 0 20px var(--cor-neon); animation: zoom 0.5s; font-weight: bold; }
+        @keyframes zoom { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+        /* PLATAFORMA */
+        header { padding: 20px; background: #000; display: flex; justify-content: space-between; align-items: center; }
+        .saldo-topo { color: var(--cor-ouro); font-weight: bold; }
+        .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
+        .game-card { background: var(--bg-card); padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #30363d; }
+        .btn-jogar { width: 100%; padding: 8px; background: var(--cor-laranja); border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+        .termos { font-size: 0.7rem; color: #8b949e; padding: 20px; line-height: 1.4; border-top: 1px solid #30363d; margin-top: 20px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <!-- INTERFACE DE ENTRADA (SPLASH SCREEN / CARREGAMENTO) -->
-    <div id="splash-screen">
-        <div class="splash-logo">Fênix Games</div>
-        <div class="splash-loader"></div>
+<!-- TELA DE LOGIN -->
+<div id="auth-screen">
+    <div class="auth-box">
+        <h2 style="color:var(--cor-laranja)">Fênix Games</h2>
+        <input type="text" class="input-auth" placeholder="CPF ou E-mail">
+        <input type="password" class="input-auth" placeholder="Senha">
+        <button class="btn-main" onclick="document.getElementById('auth-screen').style.display='none'">ENTRAR</button>
+        <p style="font-size:0.8rem; margin-top:15px; cursor:pointer" onclick="alert('Instruções enviadas para seu e-mail!')">Esqueceu sua senha?</p>
     </div>
+</div>
 
-    <!-- Header com Saldo Dinâmico -->
-    <header>
-        <div class="logo">Fênix</div>
-        <div class="saldo-topo">Saldo: R$ <span id="saldo-atual">5.00</span></div>
-    </header>
+<!-- EFEITO DE GANHO -->
+<div id="efeito-ganho"><div class="ganhou-texto">GANHOU!</div></div>
 
-    <!-- Banner -->
-    <div class="hero-banner">
-        <h1>Fênix Games</h1>
-        <div class="destaque-bonus">🎁 BÔNUS DE R$ 5,00 JÁ ATIVADO!</div>
+<!-- CONTEÚDO PRINCIPAL -->
+<header>
+    <div style="color:var(--cor-laranja); font-weight:bold;">FÊNIX GAMES</div>
+    <div class="saldo-topo">Saldo: R$ <span id="saldo-atual">5.00</span></div>
+</header>
+
+<div class="games-grid">
+    <div class="game-card">
+        <p>Aviator</p>
+        <button class="btn-jogar" onclick="apostar()">Jogar</button>
     </div>
-
-    <!-- Seção de Jogos Populares -->
-    <div class="main-content">
-        <div class="section-title">⭐ Jogos Populares</div>
-
-        <div class="games-grid">
-            <!-- Jogo 1 - Aviator -->
-            <div class="game-card">
-                <div class="game-img-box">
-                    <img src="1000695325.jpg" alt="Aviator">
-                </div>
-                <div class="game-name">Aviator</div>
-                <button class="btn-jogar" onclick="abrirJogo('Aviator', '1000695325.jpg')">Jogar</button>
-            </div>
-            <!-- Jogo 2 - Fortune Rabbit -->
-            <div class="game-card">
-                <div class="game-img-box">
-                    <img src="1000695324.jpg" alt="Fortune Rabbit">
-                </div>
-                <div class="game-name">Fortune Rabbit</div>
-                <button class="btn-jogar" onclick="abrirJogo('Fortune Rabbit', '1000695324.jpg')">Jogar</button>
-            </div>
-            <!-- Jogo 3 - Bac Bo -->
-            <div class="game-card">
-                <div class="game-img-box">
-                    <div class="game-img-fallback">🎲</div>
-                </div>
-                <div class="game-name">Bac Bo</div>
-                <button class="btn-jogar" onclick="abrirJogoText('Bac Bo', '🎲')">Jogar</button>
-            </div>
-            <!-- Jogo 4 - Roleta -->
-            <div class="game-card">
-                <div class="game-img-box">
-                    <div class="game-img-fallback">🎡</div>
-                </div>
-                <div class="game-name">Roleta</div>
-                <button class="btn-jogar" onclick="abrirJogoText('Roleta', '🎡')">Jogar</button>
-            </div>
-        </div>
+    <div class="game-card">
+        <p>Rabbit</p>
+        <button class="btn-jogar" onclick="apostar()">Jogar</button>
     </div>
+</div>
 
-    <!-- TELA DO JOGO (MODAL INTERNO) -->
-    <div id="modal-jogo" class="modal-jogo">
-        <div class="modal-container">
-            <button class="btn-fechar" onclick="fecharJogo()">✕</button>
-            <h2 id="modal-titulo" style="color: var(--cor-laranja); margin-bottom: 10px;">Jogo</h2>
-            
-            <div class="tela-gameplay">
-                <!-- Suporta imagem de fundo ou caractere/emoji -->
-                <img id="modal-imagem-bg" class="img-modal-jogo" src="" alt="" style="display: none;">
-                <div id="modal-icone" style="font-size: 3.5rem; margin-bottom: 10px; z-index: 5;">🎮</div>
-                
-                <button class="btn-apostar" onclick="fazerAposta()">Girar / Apostar (R$ 1,00)</button>
-            </div>
+<div class="termos">
+    <strong>Termos de Uso:</strong><br>
+    Ao jogar, você confirma ser maior de 18 anos. Jogue com responsabilidade. Seus dados estão protegidos.
+</div>
 
-            <!-- Recarga Direta na Tela do Jogo -->
-            <div class="caixa-deposito">
-                <h4 style="color: var(--cor-neon); margin-bottom: 5px;">Ficou sem saldo? Recarregue via PIX</h4>
-                <input type="number" id="valor-recarga" class="input-deposito" placeholder="Valor R$ (Ex: 10)">
-                <br>
-                <button class="btn-gerar-pix" onclick="gerarPixInterno()">Gerar PIX</button>
-                
-                <div id="area-pix">
-                    <img id="qr-img" class="qr-code" src="" alt="QR Code">
-                    <div id="pix-string" class="pix-code">Código...</div>
-                    <button class="btn-gerar-pix" style="background:var(--cor-ouro)" onclick="copiarPix()">Copiar Código</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script>
+    let saldo = 5.00;
 
-    <!-- Footer Fixo -->
-    <footer>
-        <div class="footer-item active"><span>🏠 Início</span></div>
-        <div class="footer-item"><span>🎰 Cassino</span></div>
-        <div class="footer-item"><span>🎁 Promo</span></div>
-        <div class="footer-item"><span>👤 Conta</span></div>
-    </footer>
-
-    <script>
-        let saldo = 5.00;
-
-        // Controle da Tela de Carregamento (Splash Screen)
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                splash.style.opacity = '0';
-                splash.style.visibility = 'hidden';
-            }, 3000); // Exibe por 3 segundos
-        });
-
-        function atualizarDisplaySaldo() {
-            document.getElementById('saldo-atual').innerText = saldo.toFixed(2);
-        }
-
-        // Abrir jogo que usa imagem real
-        function abrirJogo(nome, caminhoImagem) {
-            document.getElementById('modal-titulo').innerText = nome;
-            document.getElementById('modal-icone').style.display = 'none';
-            
-            const imgBg = document.getElementById('modal-imagem-bg');
-            imgBg.src = caminhoImagem;
-            imgBg.style.display = 'block';
-            
-            document.getElementById('modal-jogo').style.display = 'flex';
-            document.getElementById('area-pix').style.display = 'none';
-        }
-
-        // Abrir jogo que usa fallback (emoji/texto)
-        function abrirJogoText(nome, icone) {
-            document.getElementById('modal-titulo').innerText = nome;
-            document.getElementById('modal-imagem-bg').style.display = 'none';
-            
-            const txtIcone = document.getElementById('modal-icone');
-            txtIcone.innerText = icone;
-            txtIcone.style.display = 'block';
-            
-            document.getElementById('modal-jogo').style.display = 'flex';
-            document.getElementById('area-pix').style.display = 'none';
-        }
-
-        function fecharJogo() {
-            document.getElementById('modal-jogo').style.display = 'none';
-        }
-
-        function fazerAposta() {
-            if (saldo < 1.00) {
-                alert("Saldo insuficiente! Faça uma recarga via PIX abaixo.");
-                return;
-            }
+    function apostar() {
+        if (saldo >= 1.00) {
             saldo -= 1.00;
-            atualizarDisplaySaldo();
-            
+            // Lógica fictícia de vitória
             if(Math.random() > 0.5) {
-                let ganho = 2.00;
-                saldo += ganho;
-                alert("Você GANHOU R$ 2,00!");
-            } else {
-                alert("Não foi dessa vez! Tente de novo.");
+                saldo += 3.00;
+                document.getElementById('efeito-ganho').style.display = 'flex';
+                setTimeout(() => { document.getElementById('efeito-ganho').style.display = 'none'; }, 2000);
             }
-            atualizarDisplaySaldo();
+            document.getElementById('saldo-atual').innerText = saldo.toFixed(2);
+        } else {
+            alert("Saldo insuficiente!");
         }
+    }
+</script>
 
-        function gerarPixInterno() {
-            let v = document.getElementById('valor-recarga').value;
-            if(!v || v <= 0) { alert("Digite um valor válido!"); return; }
-            
-            document.getElementById('area-pix').style.display = 'block';
-            document.getElementById('qr-img').src = "https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames2026";
-            document.getElementById('pix-string').innerText = "00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames20265204000053039865405" + v + "5802BR5910FenixGames6009SAOPAULO62070503***6304ED29";
-        }
-
-        function copiarPix() {
-            let txt = document.getElementById('pix-string').innerText;
-            navigator.clipboard.writeText(txt);
-            alert("Código PIX copiado!");
-        }
-    </script>
 </body>
 </html>
+
 
 
