@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fênix Games</title>
+    <style>
+        :root {
+            --bg-principal: #0d1117;
+            --bg-card: #161b22;
+            --cor-neon: #00f2fe;
+            --cor-ouro: #ffd700;
+            --texto: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--bg-card);
+            border: 2px solid var(--cor-neon);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
+        }
+
+        h1 {
+            color: var(--cor-ouro);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        p {
+            color: #8b949e;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            color: var(--cor-neon);
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--cor-neon);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn-pagar {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-pagar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+        }
+
+        #area-pix {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #30363d;
+            display: none;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            margin: 0 auto 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .pix-copia-cola {
+            width: 100%;
+            padding: 10px;
+            background: #21262d;
+            border: 1px dashed var(--cor-ouro);
+            color: #fff;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .btn-copiar {
+            background: transparent;
+            border: 1px solid var(--cor-ouro);
+            color: var(--cor-ouro);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-copiar:hover {
+            background: var(--cor-ouro);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fênix Games</h1>
+        <p>Adicione saldo instantâneo via PIX</p>
+
+        <div class="input-group">
+            <label for="player-id">ID do Jogador / Usuário</label>
+            <input type="text" id="player-id" placeholder="Ex: fenix_player10">
+        </div>
+
+        <div class="input-group">
+            <label for="valor">Valor do Depósito (R$)</label>
+            <input type="number" id="valor" placeholder="0.00" min="1">
+        </div>
+
+        <button class="btn-pagar" onclick="gerarPagamento()">Gerar PIX</button>
+
+        <div id="area-pix">
+            <h3 style="color: var(--cor-ouro); margin-bottom: 15px;">PIX Gerado com Sucesso!</h3>
+            <img class="qr-code" id="img-qr" src="" alt="QR Code PIX">
+            <div class="pix-copia-cola" id="codigo-copia-cola">Carregando código...</div>
+            <button class="btn-copiar" onclick="copiarCodigo()">Copiar Código PIX</button>
+        </div>
+    </div>
+
+    <script>
+        function gerarPagamento() {
+            const idJogador = document.getElementById('player-id').value;
+            const valor = document.getElementById('valor').value;
+
+            if(!idJogador || !valor || valor <= 0) {
+                alert('Por favor, preencha o ID e um valor válido!');
+                return;
+            }
+
+            document.getElementById('area-pix').style.display = 'block';
+
+            document.getElementById('img-qr').src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames2026";
+            document.getElementById('codigo-copia-cola').innerText = "00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames20265204000053039865405" + valor + "5802BR5910FenixGames6009SAOPAULO62070503***6304ED29";
+            
+            document.getElementById('area-pix').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copiarCodigo() {
+            const codigoText = document.getElementById('codigo-copia-cola').innerText;
+            navigator.clipboard.writeText(codigoText).then(() => {
+                alert('Código PIX copiado para a área de transferência!');
+            }).catch(err => {
+                alert('Erro ao copiar automaticamente. Selecione o texto e copie manualmente.');
+            });
+        }
+    </script>
+
+</body>
+</html>
