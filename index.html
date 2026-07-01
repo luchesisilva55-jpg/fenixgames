@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fênix Games</title>
+    <title>Fênix Games - Onde a Sorte Renasce</title>
     <style>
         :root {
-            --bg-principal: #0d1117;
+            --bg-principal: #0b0e11; /* Preto profundo */
             --bg-card: #161b22;
-            --cor-neon: #00f2fe;
+            --cor-neon: #00f2fe; /* Ciano chamativo */
             --cor-ouro: #ffd700;
+            --cor-laranja: #ff9900; /* Laranja vibrante (referência) */
             --texto: #ffffff;
+            --texto-secundario: #8b949e;
         }
 
         * {
@@ -23,187 +25,327 @@
         body {
             background-color: var(--bg-principal);
             color: var(--texto);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: #000;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #21262d;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: var(--cor-laranja);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-entrar {
+            background: transparent;
+            border: 1px solid var(--texto-secundario);
+            color: var(--texto);
+            padding: 8px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-cadastrar {
+            background: var(--cor-laranja);
+            border: none;
+            color: #000;
+            padding: 8px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* --- Banner de Bônus (Topo) --- */
+        .hero-banner {
+            width: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-laranja);
+        }
+
+        .banner-content h1 {
+            color: var(--cor-laranja);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
+        }
+
+        .banner-content p {
+            color: var(--texto);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .destaque-bonus {
+            color: var(--cor-ouro);
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        /* --- Ícones de Categoria --- */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: #000;
+            overflow-x: auto; /* Para mobile */
+        }
+
+        .cat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--texto-secundario);
+            font-size: 0.8rem;
+            min-width: 70px;
+        }
+
+        .cat-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            border: 2px solid #30363d;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            color: var(--cor-laranja);
+            font-size: 1.5rem;
+        }
+
+        /* --- Seção de Jogos --- */
+        .main-content {
             padding: 20px;
+            flex: 1;
         }
 
-        .container {
-            background: var(--bg-card);
-            border: 2px solid var(--cor-neon);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
-        }
-
-        h1 {
-            color: var(--cor-ouro);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        p {
-            color: #8b949e;
-            margin-bottom: 25px;
-            font-size: 1rem;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            color: var(--cor-neon);
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            background: #21262d;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--cor-neon);
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-        }
-
-        .btn-pagar {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            border: none;
-            border-radius: 10px;
-            color: #000;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
-        }
-
-        .btn-pagar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
-        }
-
-        #area-pix {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #30363d;
-            display: none;
-        }
-
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            background: #fff;
-            margin: 0 auto 20px;
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .pix-copia-cola {
-            width: 100%;
-            padding: 10px;
-            background: #21262d;
-            border: 1px dashed var(--cor-ouro);
-            color: #fff;
-            border-radius: 6px;
-            font-size: 0.85rem;
+        .section-title {
+            color: var(--texto);
+            font-size: 1.3rem;
             margin-bottom: 15px;
-            word-break: break-all;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .btn-copiar {
-            background: transparent;
-            border: 1px solid var(--cor-ouro);
-            color: var(--cor-ouro);
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
+        .icon-destaque {
+            color: var(--cor-laranja);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .game-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #30363d;
             transition: 0.3s;
+            position: relative;
         }
 
-        .btn-copiar:hover {
-            background: var(--cor-ouro);
-            color: #000;
+        .game-card:hover {
+            border-color: var(--cor-laranja);
+            transform: translateY(-3px);
         }
+
+        .game-img {
+            width: 100%;
+            height: 140px;
+            background-color: #2a2a2a; /* Placeholder para imagem */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #444;
+            font-size: 2rem;
+        }
+
+        .game-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .game-name {
+            color: var(--texto);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .btn-jogar {
+            width: 100%;
+            padding: 8px;
+            background: var(--cor-neon);
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- Footer Menu --- */
+        footer {
+            background-color: #000;
+            padding: 10px;
+            border-top: 1px solid #21262d;
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--texto-secundario);
+            font-size: 0.7rem;
+            gap: 3px;
+        }
+
+        .footer-item.active {
+            color: var(--cor-laranja);
+        }
+
+        .footer-icon {
+            font-size: 1.2rem;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Fênix Games</h1>
-        <p>Adicione saldo instantâneo via PIX</p>
-
-        <div class="input-group">
-            <label for="player-id">ID do Jogador / Usuário</label>
-            <input type="text" id="player-id" placeholder="Ex: fenix_player10">
+    <!-- Header -->
+    <header>
+        <div class="logo">Fênix</div>
+        <div class="header-btns">
+            <button class="btn-entrar">Entrar</button>
+            <button class="btn-cadastrar">Cadastre-se</button>
         </div>
+    </header>
 
-        <div class="input-group">
-            <label for="valor">Valor do Depósito (R$)</label>
-            <input type="number" id="valor" placeholder="0.00" min="1">
-        </div>
-
-        <button class="btn-pagar" onclick="gerarPagamento()">Gerar PIX</button>
-
-        <div id="area-pix">
-            <h3 style="color: var(--cor-ouro); margin-bottom: 15px;">PIX Gerado com Sucesso!</h3>
-            <img class="qr-code" id="img-qr" src="" alt="QR Code PIX">
-            <div class="pix-copia-cola" id="codigo-copia-cola">Carregando código...</div>
-            <button class="btn-copiar" onclick="copiarCodigo()">Copiar Código PIX</button>
+    <!-- Banner de Bônus -->
+    <div class="hero-banner">
+        <div class="banner-content">
+            <h1>Fênix Games</h1>
+            <p>Onde a Sorte Renasce</p>
+            <p class="destaque-bonus">CADASTRou, GANHOU R$ 5,00 DE BÔNUS!</p>
+            <button class="btn-cadastrar" style="padding: 12px 30px; font-size: 1rem;">RESGATAR BÔNUS</button>
         </div>
     </div>
 
-    <script>
-        function gerarPagamento() {
-            const idJogador = document.getElementById('player-id').value;
-            const valor = document.getElementById('valor').value;
+    <!-- Categorias (Simulando ícones da referência) -->
+    <div class="categories">
+        <div class="cat-item">
+            <div class="cat-icon">🎰</div>
+            <span>Slots</span>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">🚀</div>
+            <span>Crash</span>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">🃏</div>
+            <span>Cassino</span>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">⚽</div>
+            <span>Futebol</span>
+        </div>
+    </div>
 
-            if(!idJogador || !valor || valor <= 0) {
-                alert('Por favor, preencha o ID e um valor válido!');
-                return;
-            }
+    <!-- Conteúdo Principal (Jogos) -->
+    <div class="main-content">
+        <div class="section-title">
+            <span class="icon-destaque">★</span> JOGOS POPULARES
+        </div>
 
-            document.getElementById('area-pix').style.display = 'block';
+        <div class="games-grid">
+            <!-- Jogo 1 -->
+            <div class="game-card">
+                <div class="game-img">✈️</div>
+                <div class="game-info">
+                    <div class="game-name">Aviator</div>
+                    <button class="btn-jogar">Jogar</button>
+                </div>
+            </div>
+            <!-- Jogo 2 -->
+            <div class="game-card">
+                <div class="game-img">🐇</div>
+                <div class="game-info">
+                    <div class="game-name">Fortune Rabbit</div>
+                    <button class="btn-jogar">Jogar</button>
+                </div>
+            </div>
+            <!-- Jogo 3 -->
+            <div class="game-card">
+                <div class="game-img">🎲</div>
+                <div class="game-info">
+                    <div class="game-name">Bac Bo</div>
+                    <button class="btn-jogar">Jogar</button>
+                </div>
+            </div>
+            <!-- Jogo 4 -->
+            <div class="game-card">
+                <div class="game-img">🎡</div>
+                <div class="game-info">
+                    <div class="game-name">Roleta</div>
+                    <button class="btn-jogar">Jogar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            document.getElementById('img-qr').src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames2026";
-            document.getElementById('codigo-copia-cola').innerText = "00020101021126580014br.gov.bcb.pix01369527ec56-62b1-419f-9ef4-fenixgames20265204000053039865405" + valor + "5802BR5910FenixGames6009SAOPAULO62070503***6304ED29";
-            
-            document.getElementById('area-pix').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function copiarCodigo() {
-            const codigoText = document.getElementById('codigo-copia-cola').innerText;
-            navigator.clipboard.writeText(codigoText).then(() => {
-                alert('Código PIX copiado para a área de transferência!');
-            }).catch(err => {
-                alert('Erro ao copiar automaticamente. Selecione o texto e copie manualmente.');
-            });
-        }
-    </script>
+    <!-- Footer Menu (Simulando o da referência) -->
+    <footer>
+        <div class="footer-item active">
+            <div class="footer-icon">🏠</div>
+            <span>Início</span>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">🎰</div>
+            <span>Cassino</span>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">🎁</div>
+            <span>Promo</span>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">👤</div>
+            <span>Conta</span>
+        </div>
+    </footer>
 
 </body>
 </html>
